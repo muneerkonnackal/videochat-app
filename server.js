@@ -2,12 +2,29 @@ const express = require("express")
 const http = require("http")
 const app = express()
 const server = http.createServer(app)
-const io = require("socket.io")(server, {
+// const io = require("socket.io")(server, {
+// 	cors: {
+// 		origin: "http://localhost:3000",
+// 		methods: [ "GET", "POST" ]
+// 	}
+// })
+// const io = require('socket.io')(server, {
+// 	cors: {
+// 	  origin: [
+// 		'http://localhost:3000', 
+// 		'https://videochat-backend-red.vercel.app'
+// 	  ],
+// 	  methods: ['GET', 'POST'],
+// 	  credentials: true,
+// 	},
+//   });
+  const io = require('socket.io')(server, {
 	cors: {
-		origin: "http://localhost:3000",
-		methods: [ "GET", "POST" ]
-	}
-})
+	  origin: "*",  // You can restrict it to specific origins instead of "*"
+	  methods: ["GET", "POST"],
+	},
+  });
+	
 
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id)
